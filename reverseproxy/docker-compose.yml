@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  reverse-proxy:
+    image: jwilder/nginx-proxy:latest
+    restart: unless-stopped
+    container_name: reverse-proxy
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "certs-volume:/etc/nginx/certs:ro"
+      - "reverseproxy-data:/etc/nginx/vhost.d"
+      - "reverseproxy-data:/usr/share/nginx/html"
+    ports:
+      - "80:80"
+      - "443:443"
+  nginx-letsencrypt-companion:
+    restart: unless-stopped
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - "certs-volume:/etc/nginx/certs"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "reverseproxy-data:/etc/nginx/vhost.d"
+      - "reverseproxy-data:/usr/share/nginx/html"
+    environment:
+      - NGINX_PROXY_CONTAINER=reverse-proxy
+
+volumes:
+  certs-volume:
+  reverseproxy-data:
