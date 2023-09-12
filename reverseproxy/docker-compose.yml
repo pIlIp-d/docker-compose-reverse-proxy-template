@@ -8,8 +8,9 @@ services:
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "certs-volume:/etc/nginx/certs:ro"
-      - "reverseproxy-data:/etc/nginx/vhost.d"
-      - "reverseproxy-data:/usr/share/nginx/html"
+      - "vhost:/etc/nginx/vhost.d"
+      - "html:/usr/share/nginx/html"
+      - "acme:/etc/acme.sh"
     ports:
       - "80:80"
       - "443:443"
@@ -17,13 +18,15 @@ services:
     restart: unless-stopped
     image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
-      - "certs-volume:/etc/nginx/certs"
+      - "certs-volume:/etc/nginx/certs:rw"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "reverseproxy-data:/etc/nginx/vhost.d"
-      - "reverseproxy-data:/usr/share/nginx/html"
+      - "vhost:/etc/nginx/vhost.d"
+      - "html:/usr/share/nginx/html"
+      - "acme:/etc/acme.sh"
     environment:
       - NGINX_PROXY_CONTAINER=reverse-proxy
-
 volumes:
   certs-volume:
-  reverseproxy-data:
+  vhost:
+  html:
+  acme:

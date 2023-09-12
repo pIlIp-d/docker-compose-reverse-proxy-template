@@ -9,8 +9,9 @@ services:
       - reverseproxy_default
     environment:
       - VIRTUAL_HOST=yourdomain.com
-      - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=yourdomain.com
+    expose:
+      - 80
 
 networks:
   reverseproxy_default:
