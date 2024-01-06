@@ -1,5 +1,5 @@
 # docker-compose reverse proxy template
-a little template o deploy you website and other projects behind a nginx-proxy with [Let’s Encrypt](https://de.wikipedia.org/wiki/Let%E2%80%99s_Encrypt) certificate.
+a little template o deploy your website and other projects behind a nginx-proxy with [Let’s Encrypt](https://de.wikipedia.org/wiki/Let%E2%80%99s_Encrypt) certificates.
 
 ## Setup
 1. start the reverseproxy.
